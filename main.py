@@ -1,5 +1,6 @@
 import argparse
 
+from src.aggregate import apply_aggregation
 from src.filter import apply_filter
 from src.utils import parse_arg, read_csv
 from tabulate import tabulate
@@ -10,6 +11,7 @@ def main() -> None:
 
     parser.add_argument("--file", required=True)
     parser.add_argument("--where")
+    parser.add_argument("--aggregate")
 
     args = parser.parse_args()
 
@@ -18,6 +20,10 @@ def main() -> None:
     if args.where:
         column_name, op, reference_value = parse_arg(args.where)
         rows = apply_filter(rows, op, reference_value, column_name)
+
+    if args.aggregate:
+        column_name, _, condition = parse_arg(args.aggregate)
+        rows = apply_aggregation(rows, condition, column_name)
 
     print(tabulate(rows, headers="keys"))
 
