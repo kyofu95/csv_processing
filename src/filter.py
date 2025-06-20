@@ -30,3 +30,6 @@ def apply_filter(
         # fmt: on
     except KeyError as exc:
         raise LogicError(f"Колонка '{column_name}' не найдена в данных") from exc
+    except TypeError as exc:
+        # данная ошибка будет в результате сравнения str и float. либо ошибка в reference_value, либо в csv
+        raise LogicError(f"Референсное значение {reference_value} неправильно задано, либо ошибка в данных") from exc

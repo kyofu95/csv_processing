@@ -40,3 +40,9 @@ def test_apply_filter_op_fail() -> None:
 def test_apply_filter_column_name_fail() -> None:
     with pytest.raises(LogicError):
         apply_filter(sample, "=", "1.0", "wrong_column_name")
+
+
+def test_apply_filter_reference_value_fail() -> None:
+    reference_value = "1,0"  # неправильный float
+    with pytest.raises(LogicError):
+        apply_filter(sample, ">", reference_value, "value")
