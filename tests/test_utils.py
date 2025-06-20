@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
+from src.exceptions import LogicError
 from src.utils import parse_arg, read_csv
 
 std = """
@@ -61,12 +62,12 @@ def test_parse_args_ops_success(arg: str) -> None:
 
 
 def test_parse_args_ops_failure() -> None:
-    with pytest.raises(ValueError):
+    with pytest.raises(LogicError):
         parse_arg("key_value")
 
 
 def test_parse_args_failure() -> None:
     test_arg = "keyvalue"
 
-    with pytest.raises(ValueError):
+    with pytest.raises(LogicError):
         parse_arg(test_arg)
