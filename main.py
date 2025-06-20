@@ -10,11 +10,13 @@ from tabulate import tabulate
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="CSV processor")
+    parser = argparse.ArgumentParser(
+        prog="CSV processor", description="CSV процессор, поддерживающий фильтрацию, агрегацию и сортировку"
+    )
 
-    parser.add_argument("--file", required=True)
-    parser.add_argument("--where")
-    parser.add_argument("--aggregate")
+    parser.add_argument("--file", required=True, help="Имя csv файла")
+    parser.add_argument("--where", help="Фильтрация строк по заданному значению")
+    parser.add_argument("--aggregate", help="Агрегация по заданной функции")
     parser.add_argument("--order-by", help="Сортировка")
 
     args = parser.parse_args()
