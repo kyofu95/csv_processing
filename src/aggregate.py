@@ -12,8 +12,13 @@ AGGREGATION_FUNCTIONS: dict[str, TAggregateFunc] = {
 }
 
 
-def apply_aggregation(rows: list[dict[str, str]], condition: str, column: str) -> list[dict[str, str]]:
-    values = [float(row[column]) for row in rows]
+def apply_aggregation(rows: list[dict[str, str]], condition: str, column_name: str) -> list[dict[str, str]]:
+    try:
+        values = [float(row[column_name]) for row in rows]
+    except ValueError as exc:
+        # Если не можем кастануть, значит колонка неправильная
+        msg = f"Колонка '{column_name}' не содержит численных данных"
+        raise LogicError(msg) from exc
 
     if condition not in AGGREGATION_FUNCTIONS:
         raise LogicError(f"Неподдерживаемая операция '{condition}'")

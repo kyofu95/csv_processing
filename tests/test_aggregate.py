@@ -20,3 +20,8 @@ def test_apply_aggregation_func_success(func_name: str, result: str) -> None:
 def test_apply_aggregation_wrong_func() -> None:
     with pytest.raises(LogicError):
         apply_aggregation(sample, "wrong_function_name", "value")
+
+
+def test_apply_aggregation_wrong_column() -> None:
+    with pytest.raises(LogicError):
+        apply_aggregation(sample, "wrong_function_name", "name")
