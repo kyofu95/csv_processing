@@ -2,7 +2,7 @@ from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
 from src.exceptions import LogicError
-from src.utils import parse_arg, read_csv
+from src.utils import parse_arg, read_csv, try_cast_to_float
 
 std = """
 name,brand,price,rating
@@ -71,3 +71,13 @@ def test_parse_args_failure() -> None:
 
     with pytest.raises(LogicError):
         parse_arg(test_arg)
+
+
+def test_try_cast_to_float_correct_cast() -> None:
+    value = try_cast_to_float("1.0")
+    assert isinstance(value, float)
+
+
+def test_try_cast_to_float_incorrect_cast() -> None:
+    value = try_cast_to_float("test")
+    assert isinstance(value, str)
