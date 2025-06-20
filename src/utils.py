@@ -1,11 +1,12 @@
 import csv
 import re
+from pathlib import Path
 
 from src.exceptions import LogicError
 
 
-def read_csv(file_name: str) -> list[dict[str, str]]:
-    with open(file_name, newline="") as f:
+def read_csv(file_path: Path) -> list[dict[str, str]]:
+    with open(file_path, newline="") as f:
         return list(csv.DictReader(f))
 
 

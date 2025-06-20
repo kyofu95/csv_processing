@@ -1,4 +1,5 @@
 import argparse
+from pathlib import Path
 
 from src.aggregate import apply_aggregation
 from src.filter import apply_filter
@@ -16,6 +17,11 @@ def main() -> None:
     parser.add_argument("--order-by", help="Сортировка")
 
     args = parser.parse_args()
+
+    path = Path(args.file)
+    if not path.exists():
+        print(f"Файл {args.file} не существует. Проверьте имя файла или путь к нему.")
+        return
 
     rows = read_csv(args.file)
 
