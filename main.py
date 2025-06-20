@@ -2,6 +2,7 @@ import argparse
 from pathlib import Path
 
 from src.aggregate import apply_aggregation
+from src.exceptions import LogicError
 from src.filter import apply_filter
 from src.sorting import apply_sorting
 from src.utils import parse_arg, read_csv
@@ -25,16 +26,20 @@ def main() -> None:
 
     rows = read_csv(args.file)
 
-    if args.where:
-        column_name, op, reference_value = parse_arg(args.where)
-        rows = apply_filter(rows, op, reference_value, column_name)
+    try:
+        if args.where:
+            column_name, op, reference_value = parse_arg(args.where)
+            rows = apply_filter(rows, op, reference_value, column_name)
 
-    if args.aggregate:
-        column_name, _, condition = parse_arg(args.aggregate)
-        rows = apply_aggregation(rows, condition, column_name)
-    elif args.order_by:
-        column_name, _, op = parse_arg(args.order_by)
-        rows = apply_sorting(rows, column_name, op)
+        if args.aggregate:
+            column_name, _, condition = parse_arg(args.aggregate)
+            rows = apply_aggregation(rows, condition, column_name)
+        elif args.order_by:
+            column_name, _, op = parse_arg(args.order_by)
+            rows = apply_sorting(rows, column_name, op)
+    except LogicError as exc:
+        print(str(exc))
+        return
 
     print(tabulate(rows, headers="keys"))
 
