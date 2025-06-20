@@ -19,7 +19,11 @@ def main() -> None:
     parser.add_argument("--aggregate", help="Агрегация по заданной функции")
     parser.add_argument("--order-by", help="Сортировка")
 
-    args = parser.parse_args()
+    try:
+        args = parser.parse_args()
+    except:
+        parser.print_help()
+        return
 
     path = Path(args.file)
     if not path.exists():
