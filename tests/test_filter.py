@@ -32,5 +32,5 @@ def test_apply_filter_op_fail() -> None:
 
 
 def test_apply_filter_column_name_fail() -> None:
-    with pytest.raises(KeyError):
+    with pytest.raises(LogicError):
         apply_filter(sample, "=", "1.0", "wrong_column_name")

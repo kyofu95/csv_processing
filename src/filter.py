@@ -21,9 +21,12 @@ def apply_filter(
     if not op_func:
         raise LogicError(f"Неправильный оператор '{operation_filter}'")
 
-    # fmt: off
-    return [
-        row for row in rows
-        if op_func(try_cast_to_float(row[column_name]), try_cast_to_float(reference_value))
-    ]
-    # fmt: on
+    try:
+        # fmt: off
+        return [
+            row for row in rows
+            if op_func(try_cast_to_float(row[column_name]), try_cast_to_float(reference_value))
+        ]
+        # fmt: on
+    except KeyError as exc:
+        raise LogicError(f"Колонка '{column_name}' не найдена в данных") from exc
