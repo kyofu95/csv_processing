@@ -12,17 +12,23 @@ sample = [
 
 def test_apply_filter_success() -> None:
     result_rows = apply_filter(sample, ">", "2.0", "value")
+
+    assert isinstance(result_rows, list)
     assert len(result_rows) == 2
     assert result_rows[-1]["value"] == "4.0"
 
 
 def test_apply_filter_all_success() -> None:
     result_rows = apply_filter(sample, ">", "4.0", "value")
+
+    assert isinstance(result_rows, list)
     assert len(result_rows) == 0
 
 
 def test_apply_filter_eq_success() -> None:
     result_rows = apply_filter(sample, ">", "4.0", "value")
+
+    assert isinstance(result_rows, list)
     assert len(result_rows) == 0
 
 
