@@ -1,3 +1,4 @@
+from pathlib import Path
 from unittest.mock import MagicMock, mock_open, patch
 
 import pytest
@@ -15,9 +16,9 @@ galaxy s23 ultra,samsung,1199,4.8
 def test_read_csv_success(mock_file: MagicMock) -> None:
     filename = "test.csv"
 
-    rows = read_csv(filename)
+    rows = read_csv(Path(filename))
 
-    mock_file.assert_called_with(filename, newline="")
+    mock_file.assert_called_with(Path(filename), newline="")
 
     assert len(rows) == 3
 
@@ -26,9 +27,9 @@ def test_read_csv_success(mock_file: MagicMock) -> None:
 def test_read_csv_empty(mock_file: MagicMock) -> None:
     filename = "test.csv"
 
-    rows = read_csv(filename)
+    rows = read_csv(Path(filename))
 
-    mock_file.assert_called_with(filename, newline="")
+    mock_file.assert_called_with(Path(filename), newline="")
 
     assert len(rows) == 0
 
@@ -37,9 +38,9 @@ def test_read_csv_empty(mock_file: MagicMock) -> None:
 def test_read_csv_only_headers(mock_file: MagicMock) -> None:
     filename = "test.csv"
 
-    rows = read_csv(filename)
+    rows = read_csv(Path(filename))
 
-    mock_file.assert_called_with(filename, newline="")
+    mock_file.assert_called_with(Path(filename), newline="")
 
     assert len(rows) == 0
 
